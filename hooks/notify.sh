@@ -32,7 +32,7 @@ esac
 
 # Write strings to files — avoids all AppleScript encoding/escaping issues
 printf '%s' "$DESC" > "$DESC_FILE"
-printf 'Claude Code 待审批' > "$TITLE_FILE"
+printf 'Claude Code' > "$TITLE_FILE"
 
 # Create iCloud Reminder; all strings read from files (no Chinese in script body)
 osascript <<'APPLESCRIPT' 2>>"$LOGFILE"

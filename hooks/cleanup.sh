@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deletes "Claude Code 待审批" reminders 60 seconds after tool use is confirmed.
+# Deletes "Claude Code" reminders 60 seconds after tool use is confirmed.
 # Runs deletion in background so Claude Code is not blocked.
 
 export LANG=en_US.UTF-8
@@ -7,7 +7,7 @@ export LC_ALL=en_US.UTF-8
 
 cat > /dev/null  # consume stdin
 
-printf 'Claude Code 待审批' > /tmp/claude_hook_title.txt
+printf 'Claude Code' > /tmp/claude_hook_title.txt
 
 (
   sleep 60
