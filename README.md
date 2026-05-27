@@ -40,7 +40,13 @@ The reminder title shows the tool type and content:
 
 ### Installation
 
+> [!WARNING]
+> **Before installing:** Back up your `~/.claude/settings.json` first.
+> If you already have `PreToolUse` or `PostToolUse` hooks, the installer merges them — verify there are no matcher conflicts afterwards.
+
 **Option 1: Git clone**
+
+Make sure `jq` is installed first (`brew install jq`), then:
 
 ```bash
 git clone https://github.com/Kaliveya/claude-notice.git
@@ -49,17 +55,22 @@ chmod +x install.sh
 ./install.sh
 ```
 
-**Option 2: Install via Claude Code**
+**Option 2: Install via Claude Code** ✨ *Recommended*
 
-Paste the following prompt into Claude Code:
+Paste the following prompt into Claude Code — it will handle `jq`, backup, and installation automatically:
 
 ```
-Please clone https://github.com/Kaliveya/claude-notice.git into a temporary directory, run install.sh, then delete the cloned folder.
+Please do the following:
+1. Check if jq is installed; if not, install it with: brew install jq
+2. Back up ~/.claude/settings.json to ~/.claude/settings.json.bak
+3. Clone https://github.com/Kaliveya/claude-notice.git into a temporary directory
+4. Run install.sh to install the hooks
+5. Delete the cloned folder when done
 ```
 
 The installer:
 1. Copies `hooks/notify.sh` and `hooks/cleanup.sh` to `~/.claude/hooks/`
-2. Registers `PreToolUse` and `PostToolUse` hooks in `~/.claude/settings.json`
+2. Merges `PreToolUse` and `PostToolUse` hooks into `~/.claude/settings.json` (existing hooks are preserved)
 
 ### iPhone Setup
 
@@ -85,12 +96,16 @@ jq 'del(.hooks.PreToolUse, .hooks.PostToolUse)' ~/.claude/settings.json > /tmp/s
 rmdir ~/.claude/hooks 2>/dev/null || true
 ```
 
-**Option 2: Uninstall via Claude Code**
+**Option 2: Uninstall via Claude Code** ✨ *Recommended*
 
 Paste the following prompt into Claude Code:
 
 ```
-Please uninstall the claude-notice hooks: delete ~/.claude/hooks/notify.sh and ~/.claude/hooks/cleanup.sh, then remove the PreToolUse and PostToolUse entries from ~/.claude/settings.json using jq.
+Please do the following:
+1. Back up ~/.claude/settings.json to ~/.claude/settings.json.bak
+2. Delete ~/.claude/hooks/notify.sh and ~/.claude/hooks/cleanup.sh
+3. Remove the PreToolUse and PostToolUse entries added by claude-notice from ~/.claude/settings.json using jq, preserving any other hooks
+4. Remove ~/.claude/hooks if the directory is now empty
 ```
 
 ### Logs
@@ -156,7 +171,13 @@ PostToolUse 钩子触发 → 60 秒后提醒自动删除
 
 ### 安装
 
+> [!WARNING]
+> **安装前：** 请先备份 `~/.claude/settings.json`。
+> 如果你已有 `PreToolUse` 或 `PostToolUse` 钩子，安装脚本会合并配置——安装后请检查是否存在 matcher 冲突。
+
 **方式一：Git clone**
+
+请先确认已安装 `jq`（`brew install jq`），然后执行：
 
 ```bash
 git clone https://github.com/Kaliveya/claude-notice.git
@@ -165,17 +186,22 @@ chmod +x install.sh
 ./install.sh
 ```
 
-**方式二：通过 Claude Code 安装**
+**方式二：通过 Claude Code 安装** ✨ *推荐*
 
-将以下提示词粘贴到 Claude Code 中：
+将以下提示词粘贴到 Claude Code 中——它会自动处理 `jq` 安装、备份和安装流程：
 
 ```
-请将 https://github.com/Kaliveya/claude-notice.git 克隆到临时目录，执行 install.sh 完成安装，然后删除克隆的文件夹。
+请按以下步骤操作：
+1. 检查是否已安装 jq，如未安装，执行：brew install jq
+2. 将 ~/.claude/settings.json 备份为 ~/.claude/settings.json.bak
+3. 将 https://github.com/Kaliveya/claude-notice.git 克隆到临时目录
+4. 执行 install.sh 完成钩子安装
+5. 完成后删除克隆的文件夹
 ```
 
 安装脚本会执行以下操作：
 1. 将 `hooks/notify.sh` 和 `hooks/cleanup.sh` 复制到 `~/.claude/hooks/`
-2. 在 `~/.claude/settings.json` 中注册 `PreToolUse` 和 `PostToolUse` 钩子
+2. 将 `PreToolUse` 和 `PostToolUse` 钩子合并写入 `~/.claude/settings.json`（已有钩子不受影响）
 
 ### iPhone 设置
 
@@ -201,12 +227,16 @@ jq 'del(.hooks.PreToolUse, .hooks.PostToolUse)' ~/.claude/settings.json > /tmp/s
 rmdir ~/.claude/hooks 2>/dev/null || true
 ```
 
-**方式二：通过 Claude Code 卸载**
+**方式二：通过 Claude Code 卸载** ✨ *推荐*
 
 将以下提示词粘贴到 Claude Code 中：
 
 ```
-请卸载 claude-notice 钩子：删除 ~/.claude/hooks/notify.sh 和 ~/.claude/hooks/cleanup.sh，然后用 jq 从 ~/.claude/settings.json 中移除 PreToolUse 和 PostToolUse 配置项。
+请按以下步骤操作：
+1. 将 ~/.claude/settings.json 备份为 ~/.claude/settings.json.bak
+2. 删除 ~/.claude/hooks/notify.sh 和 ~/.claude/hooks/cleanup.sh
+3. 用 jq 从 ~/.claude/settings.json 中移除 claude-notice 添加的 PreToolUse 和 PostToolUse 配置，保留其他已有钩子
+4. 如果 ~/.claude/hooks 目录已空，则一并删除
 ```
 
 ### 日志
