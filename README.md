@@ -1,6 +1,7 @@
 # Claude Code Approval Notifications
 
 Sends an iCloud Reminder (+ macOS banner) to your iPhone and Apple Watch whenever Claude Code is about to execute a tool that requires your approval — so you don't miss the prompt while away from your Mac.
+</br>
 每当 Claude Code 即将执行需要审批的操作时，自动通过 iCloud 提醒（+ macOS 横幅）推送通知到你的 iPhone 和 Apple Watch，让你离开 Mac 时也不会错过审批提示。
 
 [English](#english) | [中文](#中文)
